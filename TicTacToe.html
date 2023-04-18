@@ -1,12 +1,3 @@
-<!--REVIEW 
-Using any of the tools you’ve worked with so far, create a game of Tic-Tac-Toe.
-    1. Create a Tic-Tac-Toe game grid using your HTML element of choice. 
-    2. When a cell in the grid is clicked, an X or O should appear in that spot depending on whose turn it is.
-    3. A heading should say whether it is X’s or O’s turn and change with each move made.
-    4. A button should be available to clear the grid and restart the game.
-    5. When a player has won, or the board is full and the game results in a draw, a Bootstrap alert or similar Bootstrap component 
-    should appear across the screen announcing the winner.
---> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,18 +10,26 @@ Using any of the tools you’ve worked with so far, create a game of Tic-Tac-Toe
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.js" defer></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
-    <title>Document</title>
+    <title>Tic-Tac-Toe</title>
 </head>
-<body id="backColor">
-    <div id="backColor">
+
+<!--REVIEW In this project, classes are exclusively used for styling, 
+    while data attributes and id's are used for JS DOM Manipulation-->
+
+<!--NOTE Provides a uniform background color and a static title-->
+<body class="backColor">
+    <div>
         <h1 class="title">Tic Tac Toe</h1>
     </div>
 
+    <!--NOTE Provides the text for displaying the player's turn. The span tag in the middle of the text allows for "X" and "O"
+    to be swapped out. It also allows for styling based on whose turn it is.-->
     <section class="display">
-        Player <span class="display-player playerX">X</span>'s turn
+        Player <span class="playerX" data-display-player>X</span>'s turn
     </section>
 
-    <section class="d-flex justify-content-center" id="backColor">
+    <!--NOTE Creates the container for the board and the cells-->
+    <section class="d-flex justify-content-center">
         <div class="board" id="board">
             <div class="cell" data-cell></div>
             <div class="cell" data-cell></div>
@@ -44,7 +43,7 @@ Using any of the tools you’ve worked with so far, create a game of Tic-Tac-Toe
         </div>
     </section>
 
-
+    <!--NOTE Creates the message at the end of the game and the button that will appear to reset the game once it is done.-->
     <div class="winning-message bg-info" id="winningMessage">
         <div data-winning-message-text>X's Win!</div>
         <button id="restartButton">Restart</button>

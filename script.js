@@ -22,8 +22,8 @@ const cellElements = document.querySelectorAll("[data-cell]");
 const board = document.getElementById("board");
 const winningMessageElement = document.getElementById("winningMessage");
 const restartButton = document.getElementById("restartButton");
-const winningMessageTextElement = document.querySelector("[data-winning-message-text");
-const playerDisplay = document.querySelector(".display-player");
+const winningMessageTextElement = document.querySelector("[data-winning-message-text]");
+const playerDisplay = document.querySelector("[data-display-player]");
 let circleTurn
 let currentPlayer = "X";
 
