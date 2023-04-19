@@ -1,7 +1,11 @@
+
+/*NOTE Selects absolutely everything and applies the border-box box-sizing to make layout easier*/
 *, *::after, *::before {
     box-sizing: border-box;
 }
 
+/*NOTE creates a variable for cell size keeping it consistent across the classes. Also creates the size for the mark to be
+relative to the cell, so if the cell size changes, the mark size will change to adapt */
 :root {
     --cell-size: 100px;
     --mark-size: calc(var(--cell-size) * .9);
@@ -11,11 +15,8 @@
     background-color: aquamarine;
 }
 
-body {
-    background-color: aquamarine;
-    margin: 0;
-}
 
+/*NOTE gives the heading a font, color, size, centers it and provides a top margin */
 .title {
     font-family: "Audiowide";
     color: white;
@@ -24,6 +25,8 @@ body {
     margin-top: 10%;
 }
 
+/*NOTE gives the player display a color, font, size, while centering it and providing a top and bottom margin,
+allowing for space between the heading and the board */
 .display {
     color: white;
     font-family: "Audiowide";
@@ -33,6 +36,7 @@ body {
     margin-bottom: 1em;
 }
 
+/*NOTE provides the colors for player x and o in the player display */
 .playerX {
     color: blue;
 }
@@ -41,20 +45,20 @@ body {
     color: teal;
 }
 
+/*NOTE defines the parameters of the board and centers it */
 .board {
     background-color: aquamarine;
     max-width: 300px;
-    max-height: 300px; /*NOTE - this will make the board the entire size of the
-    screen, so it will be easier to center it*/
+    max-height: 300px;
     display: grid;
     justify-content: center;
     align-content: center;
     justify-items: center;
     align-items: center;
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(3, auto);/*gives three separate columns that will auto size to the size of the cells below */
 }
 
-
+/*NOTE creates a the parameters of the cell and the items within the cell, as well as the type of cursor*/
 .cell {
     width: var(--cell-size);
     height: var(--cell-size);
@@ -66,31 +70,37 @@ body {
     cursor: pointer;
 }
 
+/*NOTE Targets cells in the top row and removes top border*/
 .cell:first-child,
 .cell:nth-child(2),
 .cell:nth-child(3) {
     border-top: none;
 }
 
+/*NOTE Targets cells on the left of the grid and removes the left border*/
 .cell:nth-child(3n + 1) {
     border-left: none;
 }
 
+/*NOTE Targets cells on the right of the grid and removes the right border*/
 .cell:nth-child(3n + 3) {
     border-right: none;
 }
 
+/*NOTE Targets cells on the bottom of the grid and removes the bottom border */
 .cell:last-child,
 .cell:nth-child(8),
 .cell:nth-child(7) {
     border-bottom: none;
 }
 
+/*NOTE When a cell has been filled with an "X" or "O", the cursor will have a not allowed symbol */
 .cell.x,
 .cell.circle {
     cursor: not-allowed;
 }
 
+/*NOTE defines the color of the "X"*/
 .cell.x::before,
 .cell.x::after {
     background-color: blue;
@@ -101,34 +111,42 @@ body {
     background-color: whitesmoke;
 }
 
+/*NOTE defines the color of the "O"*/
 .cell.circle::before,
 .cell.circle::after {
     background-color: teal;
 }
 
+/*NOTE defines the color of the X's and O's in the hover state*/
 .board.circle .cell:not(.x):not(.circle):hover::before,
 .board.circle .cell:not(.x):not(.circle):hover::after {
     background-color: whitesmoke;
 }
 
+ /*REVIEW The following code will be using CSS to create the X and O, keeping it centered and uniform.
+ Both the X and the O will utilize the before and after pseudo-elements to add in two marks into the cell. The X will be
+ made by two marks that have reduced their width and then been turned 45 degrees. The O will be made by two marks
+ with a border radius that has turned them into circles. The second O mark will be 70% smaller than the first and the same color
+ as the background. This will also be applied to their hover states as well */
+
 .cell.x::before,
 .cell.x::after,
 .board.x .cell:not(.x):not(.circle):hover::before,
 .board.x .cell:not(.x):not(.circle):hover::after {
-    content: "";
+    content: "";  /*creates an empty string so the pseudo-elements will render */
     position: absolute;
-    width: calc(var(--mark-size) * .15);
+    width: calc(var(--mark-size) * .15); /*adds an element before and after that is 15% smaller than the mark size */
     height: var(--mark-size);
 }
 
 .cell.x::before,
 .board.x .cell:not(.x):not(.circle):hover::before {
-    transform: rotate(45deg);
+    transform: rotate(45deg);  /*rotates before element 45 degrees */
 }
 
 .cell.x::after,
 .board.x .cell:not(.x):not(.circle):hover::after {
-    transform: rotate(-45deg);
+    transform: rotate(-45deg); /*rotates after element 45 degrees in opposite direction */
 }
 
 .cell.circle::before,
@@ -141,19 +159,23 @@ body {
 
 }
 
+/*creates the first bigger circle*/
 .cell.circle::before,
 .board.circle .cell:not(.x):not(.circle):hover::before {
     width: var(--mark-size);
     height: var(--mark-size);
 }
 
+/*creates the second smaller inner circle */
 .cell.circle::after,
 .board.circle .cell:not(.x):not(.circle):hover::after {
     width: calc(var(--mark-size) * .7);
     height: calc(var(--mark-size) * .7);
-    background-color: aquamarine;
+    background-color: aquamarine; /*NOTE the color of the smaller circle is the same in hover state, since you
+    should be able to see through the O regardless if you've clicked on it or not */
 }
 
+/*NOTE The winning message display is none because it will not show up until JS flips it to "show", which is defined below. */
 .winning-message {
     display: none;
     position: fixed;
@@ -168,8 +190,9 @@ body {
     font-size: 5rem;
     flex-direction: column; 
 
-} /*REVIEW - can this be turned into a bootstrap alert? and is there a way to add a heading to this that doesn't completely fuck everything up? */
+}
 
+/*NOTE defines the look of the winning message button. Since it is a child of winning-message, it will not show until prompted */
 .winning-message button {
     font-size: 2rem;
     background-color: blueviolet;
@@ -180,6 +203,7 @@ body {
     cursor: pointer;
 }
 
+/*NOTE Reverses the color of the button when you hover over it */
 .winning-message button:hover {
     background-color: white;
     color: blueviolet;
@@ -188,15 +212,7 @@ body {
 
 }
 
+/*NOTE this class was created so JS could access it and change the state of the winning message once the game is done */
 .winning-message.show {
     display: flex;
 }
-
-/*REVIEW 
-Using any of the tools you’ve worked with so far, create a game of Tic-Tac-Toe.
-    1. Create a Tic-Tac-Toe game grid using your HTML element of choice. 
-    2. When a cell in the grid is clicked, an X or O should appear in that spot depending on whose turn it is.
-    3. A heading should say whether it is X’s or O’s turn and change with each move made.
-    4. A button should be available to clear the grid and restart the game.
-    5. When a player has won, or the board is full and the game results in a draw, a Bootstrap alert or similar Bootstrap component 
-    should appear across the screen announcing the winner.*/
