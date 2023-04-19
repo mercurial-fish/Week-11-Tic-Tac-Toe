@@ -106,8 +106,14 @@ allowing for space between the heading and the board */
     background-color: blue;
 }
 
+/*REVIEW board.x and board.circle come into play when either "X" or "O" is taking their turn and they're about to click on the board.
+In JS there is a function that vascillates between the classes and will call these boards into play. Depending on which board is in play,
+a mark of X or O will appear when the cursor hovers over a cell that is unclaimed. This code here defines the color of the mark in the hover state. */
+
 .board.x .cell:not(.x):not(.circle):hover::before,
-.board.x .cell:not(.x):not(.circle):hover::after {
+.board.x .cell:not(.x):not(.circle):hover::after,
+.board.circle .cell:not(.x):not(.circle):hover::before,
+.board.circle .cell:not(.x):not(.circle):hover::after {
     background-color: whitesmoke;
 }
 
@@ -115,12 +121,6 @@ allowing for space between the heading and the board */
 .cell.circle::before,
 .cell.circle::after {
     background-color: teal;
-}
-
-/*NOTE defines the color of the X's and O's in the hover state*/
-.board.circle .cell:not(.x):not(.circle):hover::before,
-.board.circle .cell:not(.x):not(.circle):hover::after {
-    background-color: whitesmoke;
 }
 
  /*REVIEW The following code will be using CSS to create the X and O, keeping it centered and uniform.
